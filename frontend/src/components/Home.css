@@ -1,0 +1,144 @@
+/* Full-page container with the background image */
+.home-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    background-image: url('./image.png'); /* Path to your image */
+    background-position: center center; /* Center the background image */
+    background-size: cover; /* Ensures the image covers the full screen */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevents any overflow issues */
+}
+
+/* Overlay for text */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white; /* Text color */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Heading styling */
+.home-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: whitesmoke;
+}
+
+/* Paragraph styling */
+.home-description {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+.home-call-to-action {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* Make Register and Login text bold */
+.bold-text {
+    font-weight: bold;
+}
+
+/* Buttons container */
+.home-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+    justify-content: center;
+}
+
+/* Button styling */
+.home-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 5px;
+    width: 150px; /* Fixed width for better responsiveness */
+    font-weight: bold; /* Make the text inside the button bold */
+}
+
+/* Button hover effect */
+.home-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.home-button:active {
+    background-color: #3e8e41;
+}
+
+/* Link styling (removes underline) */
+a {
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .home-title {
+        font-size: 2rem;
+    }
+
+    .home-description,
+    .home-call-to-action {
+        font-size: 1rem;
+    }
+
+    .home-button {
+        font-size: 0.9rem;
+        width: 120px; /* Slightly smaller button on smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .home-title {
+        font-size: 1.8rem;
+    }
+
+    .home-description {
+        font-size: 0.9rem;
+        max-width: 90%; /* Adjusts max width on smaller screens */
+    }
+
+    .home-button {
+        font-size: 0.85rem;
+        width: 100px; /* Smaller buttons on even smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .home-title {
+        font-size: 1.6rem;
+    }
+
+    .home-description {
+        font-size: 0.85rem;
+    }
+
+    .home-button {
+        font-size: 0.8rem;
+        width: 80px; /* Even smaller buttons on mobile devices */
+    }
+}
