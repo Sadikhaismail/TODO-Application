@@ -1,12 +1,12 @@
-// frontend/src/components/Auth/Register.js
 import React, { useState } from "react";
 import api from "../../api/api";
-import { useNavigate } from "react-router-dom"; // Import useNavigate to redirect after registration
+import { useNavigate, Link } from "react-router-dom";
+import "./Register.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
-  const [errorMessage, setErrorMessage] = useState(""); // To hold the error message
-  const navigate = useNavigate(); // To navigate to the login page after successful registration
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,12 +15,10 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Sending the form data to the backend for registration
       await api.post("/auth/register", formData);
       alert("Registration successful. Please log in.");
-      navigate("/login"); // Redirect to login page after successful registration
+      navigate("/login");
     } catch (error) {
-      // Check if the error is due to the user already existing
       if (error.response?.data?.message === "User already exists") {
         setErrorMessage("This email is already registered. Please use a different one.");
       } else {
@@ -31,30 +29,38 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>} {/* Display error message if any */}
-      <input
-        name="name"
-        placeholder="Name"
-        onChange={handleChange}
-        required
-      />
-      <input
-        name="email"
-        placeholder="Email"
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        onChange={handleChange}
-        required
-      />
-      <button type="submit">Register</button>
-    </form>
+    <div className="register-container">
+      <form className="register-form" onSubmit={handleSubmit}>
+        <h2 className="register-heading">Register</h2>
+        {errorMessage && <p className="register-error">{errorMessage}</p>}
+        <input
+          className="register-input"
+          name="name"
+          placeholder="Name"
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="register-input"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="register-input"
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
+        <button className="register-button" type="submit">Register</button>
+        <div className="register-link">
+          Already registered? <Link className="register-login-link" to="/login">Login here</Link>
+        </div>
+      </form>
+    </div>
   );
 };
 

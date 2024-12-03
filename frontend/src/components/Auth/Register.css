@@ -1,0 +1,97 @@
+/* Container styling */
+.register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('/src/components/Auth/image.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Form styling */
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 1px 2px 3px rgb(255, 255, 255);
+    margin-left: 450px;
+
+  }
+  
+  /* Heading styling */
+  .register-heading {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: black;
+    text-align: center;
+  }
+  
+  /* Input field styling */
+  .register-input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  .register-input:focus {
+    border-color: #888888;
+    outline: none;
+  }
+  
+  /* Button styling */
+  .register-button {
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-button:hover {
+    background-color: #696767;
+  }
+  
+  /* Error message styling */
+  .register-error {
+    color: red;
+    font-size: 1rem;
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  /* Link section styling */
+  .register-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .register-login-link {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .register-login-link:hover {
+    text-decoration: underline;
+  }
+  

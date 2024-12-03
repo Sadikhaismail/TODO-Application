@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './Login.css';
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -19,17 +20,14 @@ const Login = () => {
     setIsLoading(true);
     try {
       const { data } = await axios.post("http://localhost:5000/api/auth/login", formData);
-      alert("login successful.");
+      alert("Login successful.");
 
-      
       localStorage.setItem("token", data.token);
       login(data.token);
 
-     
-      // Redirect after a delay to show success message first
       setTimeout(() => {
         navigate("/dashboard");
-      }, 1500); // Give time for success message to appear
+      }, 1500);
     } catch (error) {
       setIsLoading(false);
       if (error.response) {
@@ -42,8 +40,8 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
-      
+      <div className="login-box">
+        <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -65,9 +63,13 @@ const Login = () => {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
-      
-      
-      {error && <p className="error">{error}</p>} {/* Display error message */}
+
+        {error && <p className="error">{error}</p>} {/* Display error message */}
+
+        <div className="login-link">
+          <p>New User? <a href="/register">Register Here</a></p>
+        </div>
+      </div>
     </div>
   );
 };
