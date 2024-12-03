@@ -1,16 +1,31 @@
-// backend/models/Task.js
 const mongoose = require("mongoose");
 
-const taskSchema = new mongoose.Schema(
-  {
-    title: { type: String, required: true },
-    description: { type: String },
-    status: { type: String, default: "Pending" },
-    assignee: { type: String, required: true },
-    dueDate: { type: Date, required: true },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+const taskSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  description: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["Pending", "Completed", "All"], // Can be extended if needed
+    default: "Pending",
+  },
+  assignee: {
+    type: String, // Can be a reference to a User model if you need user-specific data
+    required: true,
+  },
+  dueDate: {
+    type: Date,
+    required: true,
+  },
+  creationDate: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 module.exports = mongoose.model("Task", taskSchema);
