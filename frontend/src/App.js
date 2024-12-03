@@ -1,3 +1,4 @@
+// frontend/src/App.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Auth/Login";
@@ -29,6 +30,14 @@ const App = () => {
         />
         <Route
           path="/task-editor"
+          element={
+            <PrivateRoute>
+              <TaskEditor />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/task-editor/:id"
           element={
             <PrivateRoute>
               <TaskEditor />
