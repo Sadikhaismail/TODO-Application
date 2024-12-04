@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api/api';
 
 const TaskEditor = () => {
-  const { id } = useParams();  // Get task ID from URL
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -17,41 +17,37 @@ const TaskEditor = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
-  const assignees = ["Kiara", "Abin", "John", "Emily"];
+  const assignees = ['Kiara', 'Abin', 'John', 'Emily'];
 
-  // Memoize the logout function
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     navigate('/login');
   }, [navigate]);
 
-  // Memoize the refreshToken function
   const refreshToken = useCallback(async () => {
     try {
       const response = await api.post('/auth/refresh', {
         refreshToken: localStorage.getItem('refreshToken'),
       });
       const newAccessToken = response.data.token;
-      localStorage.setItem('token', newAccessToken);  // Store new token
+      localStorage.setItem('token', newAccessToken);
       return newAccessToken;
     } catch (error) {
       console.error('Failed to refresh token:', error);
-      logout();  // Log out if refresh fails
+      logout();
       return null;
     }
   }, [logout]);
 
-  // Fetch task details when component mounts or when the task ID changes
   useEffect(() => {
     const fetchTask = async () => {
       setLoading(true);
       const token = localStorage.getItem('token');
 
-      // If token is expired, try refreshing
       if (isTokenExpired(token)) {
         const newToken = await refreshToken();
-        if (!newToken) return;  // Exit if token can't be refreshed
+        if (!newToken) return;
       }
 
       try {
@@ -65,22 +61,21 @@ const TaskEditor = () => {
         console.error('Error fetching task:', error);
         if (error.response?.data?.message === 'Token expired') {
           setErrorMessage('Session expired. Please log in again.');
-          logout();  // Log out if token expired
+          logout();
         } else {
-          setErrorMessage('Failed to load task.');
+          setErrorMessage('');
         }
         setLoading(false);
       }
     };
 
     fetchTask();
-  }, [id, logout, refreshToken]);  // Add logout and refreshToken to the dependencies array
+  }, [id, logout, refreshToken]);
 
-  // Check if the token is expired
   const isTokenExpired = (token) => {
     if (!token) return true;
     const decoded = JSON.parse(atob(token.split('.')[1]));
-    const expirationTime = decoded.exp * 1000;  // Convert exp to milliseconds
+    const expirationTime = decoded.exp * 1000;
     return expirationTime < Date.now();
   };
 
@@ -90,8 +85,8 @@ const TaskEditor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage('');  // Clear any previous error message
-    setSuccessMessage('');  // Clear any previous success message
+    setErrorMessage('');
+    setSuccessMessage('');
 
     if (!formData.title || !formData.assignee || !formData.dueDate) {
       setErrorMessage('Please fill out all required fields.');
@@ -100,30 +95,26 @@ const TaskEditor = () => {
 
     setLoading(true);
     try {
-      console.log("Updating task with data: ", formData); // Log form data
-      const response = await api.put(`/tasks/edit/${id}`, formData); // Update task with formData
-      console.log("API response: ", response); // Log API response
-
-      // Success: Update message and navigate away
+      await api.put(`/tasks/edit/${id}`, formData);
       setSuccessMessage('Task updated successfully!');
-      setErrorMessage('');  // Clear any existing error message
-      navigate('/dashboard');  // Navigate back to the dashboard after updating the task
+      setErrorMessage('');
+      navigate('/dashboard');
     } catch (error) {
-      console.error("API error: ", error); // Log error to console
-      setSuccessMessage('');  // Clear any success message
+      console.error(error);
+      setSuccessMessage('');
       setErrorMessage('Failed to update task. Please try again.');
     }
     setLoading(false);
   };
 
   return (
-    <div>
-      <h2>Edit Task</h2>
-      {loading && <p>Loading...</p>}
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
+      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Edit Task</h2>
+      {loading && <p style={{ textAlign: 'center', color: '#555' }}>Loading...</p>}
+      {errorMessage && <p style={{ color: 'red', textAlign: 'center' }}>{errorMessage}</p>}
+      {successMessage && <p style={{ color: 'green', textAlign: 'center' }}>{successMessage}</p>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <input
           type="text"
           name="title"
@@ -131,18 +122,27 @@ const TaskEditor = () => {
           onChange={handleChange}
           placeholder="Task title"
           required
+          style={{ padding: '10px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
         />
         <textarea
           name="description"
           value={formData.description}
           onChange={handleChange}
           placeholder="Task description"
+          style={{
+            padding: '10px',
+            fontSize: '14px',
+            borderRadius: '4px',
+            border: '1px solid #ccc',
+            height: '100px',
+          }}
         />
         <select
           name="assignee"
           value={formData.assignee}
           onChange={handleChange}
           required
+          style={{ padding: '10px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
         >
           <option value="">Select Assignee</option>
           {assignees.map((assignee) => (
@@ -157,12 +157,30 @@ const TaskEditor = () => {
           value={formData.dueDate}
           onChange={handleChange}
           required
+          style={{ padding: '10px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
         />
-        <select name="status" value={formData.status} onChange={handleChange}>
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+          style={{ padding: '10px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
+        >
           <option value="Pending">Pending</option>
           <option value="Completed">Completed</option>
         </select>
-        <button type="submit" disabled={loading}>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            padding: '10px',
+            fontSize: '14px',
+            borderRadius: '4px',
+            border: 'none',
+            backgroundColor: '#007BFF',
+            color: '#fff',
+            cursor: loading ? 'not-allowed' : 'pointer',
+          }}
+        >
           {loading ? 'Saving...' : 'Save Task'}
         </button>
       </form>

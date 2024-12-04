@@ -10,4 +10,3 @@ router.get("/all", authMiddleware, getAllTasks);
 router.delete("/delete/:id", authMiddleware, deleteTask);
 
 module.exports = router;
-
