@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/api"; // Adjust the import path
+import api from "../api/api"; 
 
 const CreateTask = () => {
   const [formData, setFormData] = useState({
@@ -33,9 +33,9 @@ const CreateTask = () => {
 
     setLoading(true);
     try {
-      await api.post("/tasks", formData); // Send POST request to create the task
+      await api.post("/tasks", formData); 
       setSuccessMessage("Task created successfully!");
-      navigate("/dashboard"); // Redirect back to dashboard after creation
+      navigate("/dashboard"); 
     } catch (error) {
       console.error(error.response?.data?.message || error.message);
       setErrorMessage("Failed to create task.");

@@ -1,10 +1,9 @@
-// backend/controllers/taskController.js
 const Task = require("../models/Task");
 
 const createTask = async (req, res) => {
   try {
     const { title, description, status, assignee, dueDate } = req.body;
-    const userId = req.user.id;  // Using the decoded user ID from the JWT
+    const userId = req.user.id;  
 
     if (!title || !assignee || !dueDate) {
       return res.status(400).json({ message: "Missing required fields." });

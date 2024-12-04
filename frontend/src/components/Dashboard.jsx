@@ -11,7 +11,6 @@ const Dashboard = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  // Fetch tasks when filters change
   useEffect(() => {
     const fetchTasks = async () => {
       setLoading(true);
@@ -31,7 +30,7 @@ const Dashboard = () => {
   const handleDelete = async (taskId) => {
     try {
       await api.delete(`/tasks/delete/${taskId}`);
-      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId)); // Functional setState
+      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId)); 
     } catch (error) {
       console.error(error.response?.data?.message || error.message);
       setErrorMessage("Failed to delete task.");
@@ -46,7 +45,7 @@ const Dashboard = () => {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return "Invalid Date"; // Return 'Invalid Date' if no value
+    if (!dateString) return "Invalid Date"; 
     const date = new Date(dateString);
     return date.getTime()
       ? date.toLocaleDateString(undefined, {
@@ -54,11 +53,11 @@ const Dashboard = () => {
           month: "short",
           day: "numeric",
         })
-      : "Invalid Date"; // Check if the date is valid
+      : "Invalid Date"; 
   };
 
   const handleEditClick = (taskId) => {
-    navigate(`/task-editor/${taskId}`); // Redirect to Task Editor for specific task
+    navigate(`/task-editor/${taskId}`); 
   };
 
   return (
@@ -70,7 +69,6 @@ const Dashboard = () => {
         margin: "0 auto",
       }}
     >
-      {/* Dashboard Heading */}
       <h2
         style={{
           fontSize: "2rem",
@@ -83,7 +81,6 @@ const Dashboard = () => {
         Dashboard
       </h2>
 
-      {/* Centered Intro Message */}
       <div style={{ textAlign: "center", marginBottom: "30px" }}>
         <h3 style={{ fontSize: "1.5rem", marginBottom: "20px" }}>
           Begin to manage your tasks
@@ -114,7 +111,6 @@ const Dashboard = () => {
         </p>
       </div>
 
-      {/* Filters */}
       <div style={{ display: "flex", marginBottom: "20px", justifyContent: "center" }}>
         <select
           name="status"
@@ -136,7 +132,6 @@ const Dashboard = () => {
         </select>
       </div>
 
-      {/* Loading & Error Handling */}
       {loading && (
         <p style={{ fontSize: "1.2rem", textAlign: "center" }}>Loading tasks...</p>
       )}
@@ -146,7 +141,6 @@ const Dashboard = () => {
         </p>
       )}
 
-      {/* Display tasks */}
       {tasks.length > 0 ? (
         tasks.map((task) => (
           <div
@@ -182,7 +176,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Task Action Buttons */}
             <div
               style={{
                 display: "flex",

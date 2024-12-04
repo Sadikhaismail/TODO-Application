@@ -11,11 +11,11 @@ const taskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Pending", "Completed", "All"], // Can be extended if needed
+    enum: ["Pending", "Completed", "All"], 
     default: "Pending",
   },
   assignee: {
-    type: String, // Can be a reference to a User model if you need user-specific data
+    type: String, 
     required: true,
   },
   dueDate: {

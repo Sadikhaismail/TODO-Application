@@ -1,4 +1,3 @@
-// backend/middleware/authMiddleware.js
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
@@ -9,12 +8,11 @@ const authMiddleware = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); 
 
-    req.user = { id: decoded.id }; // Attach user data to the request object
-    next(); // Proceed to the next middleware/route handler
+    req.user = { id: decoded.id }; 
+    next(); 
   } catch (error) {
-    // Handle expired or invalid token error
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ message: "Token expired" });
     }

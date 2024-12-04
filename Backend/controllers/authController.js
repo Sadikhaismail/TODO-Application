@@ -1,4 +1,3 @@
-// backend/controllers/authController.js
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
@@ -25,18 +24,14 @@ const loginUser = async (req, res) => {
     try {
       const { email, password } = req.body;
   
-      // Check if user exists
       const user = await User.findOne({ email });
       if (!user) return res.status(400).json({ message: "Invalid email or password" });
   
-      // Compare password
       const isMatch = await user.comparePassword(password);
       if (!isMatch) return res.status(400).json({ message: "Invalid email or password" });
   
-      // Generate JWT token
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
       
-      // Send the token back in the response
       res.status(200).json({ token });
     } catch (error) {
       res.status(500).json({ message: error.message });
